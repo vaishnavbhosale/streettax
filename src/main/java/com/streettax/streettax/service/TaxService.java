@@ -1,6 +1,8 @@
 package com.streettax.streettax.service;
 import com.streettax.streettax.dto.TaxCalculationRequest;
 import com.streettax.streettax.dto.TaxCalculationResponse;
+import com.streettax.streettax.exception.BadRequestException;
+import com.streettax.streettax.exception.BusinessException;
 import com.streettax.streettax.model.VehicleType;
 import com.streettax.streettax.model.RouteType;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,22 @@ public class TaxService {
 
     private static final double BASE_RATE_PER_KM = 5.0;
 
+
     public TaxCalculationResponse calculateTax(TaxCalculationRequest request) {
+        if (request.getDistanceInKm() <= 0) {
+            throw new BadRequestException(
+                    "INVALID_DISTANCE",
+                    "Distance must be greater than zero"
+            );
+        }
+
+        if (request.getRouteType() == null) {
+            throw new BadRequestException(
+                    "MISSING_ROUTE_TYPE",
+                    "Route type is required"
+            );
+        }
+
 
         double vehicleMultiplier = getVehicleMultiplier(request.getVehicleType());
         double routeMultiplier = getRouteMultiplier(request.getRouteType());
@@ -36,7 +53,12 @@ public class TaxService {
             case TRUCK:
                 return 1.5;
             default:
-                throw new IllegalArgumentException("Unsupported vehicle type");
+//
+                throw new BusinessException(
+                        "UNSUPPORTED_VEHICLE_TYPE",
+                        "vehicle type is not supported"
+                );
+
         }
     }
 
@@ -49,7 +71,10 @@ public class TaxService {
             case NATIONAL_HIGHWAY:return 1.2;
 
             default:
-                throw new IllegalArgumentException("Unsupported route type");
+                throw new BusinessException(
+                        "UNSUPPORTED_ROUTE_TYPE",
+                        "Route type is not supported"
+                );
         }
     }
 }
