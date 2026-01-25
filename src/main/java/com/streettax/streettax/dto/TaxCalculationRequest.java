@@ -1,4 +1,5 @@
 package com.streettax.streettax.dto;
+import com.streettax.streettax.model.RouteType;
 import com.streettax.streettax.model.VehicleType;
 
 public class TaxCalculationRequest {
@@ -7,6 +8,7 @@ public class TaxCalculationRequest {
     private String destinationCity;
     private int distanceInKm;
     private VehicleType vehicleType;
+    private RouteType routeType;
 
     public TaxCalculationRequest() {
     }
@@ -41,5 +43,12 @@ public class TaxCalculationRequest {
 
     public void setVehicleType(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
+    }
+
+    public void setRouteType(RouteType routeType) {
+        this.routeType = routeType;
+    }
+    public RouteType getRouteType(){
+        return routeType;
     }
 }

@@ -9,6 +9,7 @@ public class TaxCalculationResponse {
     private VehicleType vehicleType;
     private double estimatedTax;
 
+
     public TaxCalculationResponse() {
     }
 
@@ -51,4 +52,6 @@ public class TaxCalculationResponse {
     public void setEstimatedTax(double estimatedTax) {
         this.estimatedTax = estimatedTax;
     }
+
+
 }
