@@ -1,5 +1,4 @@
 package com.streettax.streettax.dto;
-
 import com.streettax.streettax.model.VehicleType;
 
 public class TaxCalculationResponse {
